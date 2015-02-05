@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>@project@</id>
-    <version>@build.number@</version>
-    <authors>@authors@</authors>
-    <owners>@authors@</owners>
+    <id>IfSharp.Charting</id>
+    <version>0.0.1-alpha</version>
+    <authors>David Carlson</authors>
+    <owners>David Carlson</owners>
     <licenseUrl>http://github.com/mndrake/IfSharp.Charting/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>http://mndrake.github.com/IfSharp.Charting</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>@summary@</summary>
-    <description>@description@</description>
-    <releaseNotes>@releaseNotes@</releaseNotes>
+    <summary>charting library for IfSharp using MetricsGraphics.js</summary>
+    <description>charting library for IfSharp using MetricsGraphics.js</description>
+    <releaseNotes>Initial release</releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>@tags@</tags>
+    <tags>IfSharp charting</tags>
     <dependencies />
   </metadata>
   <files>
