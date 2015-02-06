@@ -1,4 +1,4 @@
-#### 0.0.7-alpha - 2/6/2015
+#### 0.0.8-alpha - 2/6/2015
 * fixed Histogram mouseover comment
 
 #### 0.0.6-alpha - 2/6/2015

@@ -76,7 +76,7 @@ module ChartTypes =
         do
             base.["chart_type"] <- "histogram"
             base.["right"] <- 60
-            base.["mouseover"] <- @"FUNCfunction(d, i){$('{GUID} svg .mg-active-datapoint').text('Value: ' + d3.round(d.x,2) + '   Count: ' + d.y)}FUNC"
+            base.["mouseover"] <- @"FUNCfunction(d, i){$('#{GUID} svg .mg-active-datapoint').text('Value: ' + d3.round(d.x,2) + '   Count: ' + d.y);}FUNC"
 
         member this.Bins with get() : int = this.["bins"] |> unbox and set (value:int) = this.["bins"] <- value
         member this.BarMargin with get() : int = this.["bar_margin"] |> unbox and set (value:int) = this.["bar_margin"] <- value
