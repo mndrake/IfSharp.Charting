@@ -33,20 +33,41 @@ module ChartTypes =
             options.["width"] <- 600
             options.["height"] <- 400
             options.["y_extended_ticks"] <- true
+            options.["x_extended_ticks"] <- false
             options.["target"] <- String.Format("#{0}", guid)
 
         member this.HasOption key = options.ContainsKey(key)
 
+        member this.SetLegend (keys: seq<string>) =
+            this.["legend_target"] <- "#{GUID} .legend"
+            this.["legend"] <- keys
+
         member this.xLabel 
             with get() : string = this.["x_label"] |> unbox 
              and set (value:string) = 
-                if not <| this.HasOption("x_label") then this.["left"] <- 60                 
+                if not <| this.HasOption("x_label") then this.["bottom"] <- 70                 
                 this.["x_label"] <- value
+
+        member this.xExtendedTicks
+            with get() : bool = this.["x_extended_ticks"] |> unbox
+             and set (value:bool) = this.["x_extended_ticks"] <- value
+
+        member this.yExtendedTicks
+            with get() : bool = this.["y_extended_ticks"] |> unbox
+             and set (value:bool) = this.["y_extended_ticks"] <- value
+
+        member this.xMax
+            with get() : float = this.["max_x"] |> unbox
+             and set (value:float) = this.["max_x"] <- value
+
+        member this.xMin
+            with get() : float = this.["min_x"] |> unbox
+             and set (value:float) = this.["min_x"] <- value
 
         member this.yLabel 
             with get() : string = this.["y_label"] |> unbox 
              and set (value:string) = 
-                 if not <| this.HasOption("x_label") then this.["bottom"] <- 60
+                 if not <| this.HasOption("y_label") then this.["left"] <- 100
                  this.["y_label"] <- value
 
         member this.ToHtml() =
@@ -80,8 +101,12 @@ module ChartTypes =
 
         member this.Bins with get() : int = this.["bins"] |> unbox and set (value:int) = this.["bins"] <- value
         member this.BarMargin with get() : int = this.["bar_margin"] |> unbox and set (value:int) = this.["bar_margin"] <- value
-        member this.Data with get() : seq<float> = this.["data"] |> unbox and set (value:seq<float>) = this.["data"] <- value
-
+        member this.Data 
+            with get() : seq<float> = this.["data"] |> unbox 
+             and set (value:seq<float>) = 
+                 this.xMax <- Seq.max value
+                 this.["data"] <- value
+             
 
 type Line =
     static member create values =
@@ -99,6 +124,18 @@ type Line =
 
     static member yLabel value (chart: ChartTypes.LineChart) =
         chart.yLabel <- value
+        chart
+
+    static member xExtendedTicks value (chart: ChartTypes.LineChart) =
+        chart.xExtendedTicks <- value
+        chart
+
+    static member yExtendedTicks value (chart: ChartTypes.LineChart) =
+        chart.yExtendedTicks <- value
+        chart
+
+    static member legend value (chart: ChartTypes.LineChart) =
+        chart.SetLegend value
         chart
 
 type Histogram =
