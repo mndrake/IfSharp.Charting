@@ -52,11 +52,11 @@ module ChartTypes =
             base.["area"] <- false
             base.["x_accessor"] <- "x"
             base.["y_accessor"] <- "y"
-            base.["data"] <- seq []
+            base.["data"] <- Seq.empty
 
-        member this.addSeries (values: seq<float*float>) = 
-            let data = this.["data"] |> unbox
-            this.["data"] <- Seq.append data [values |> Seq.map (fun p -> {x = fst p; y = snd p})]
+        member this.addSeries (values: (float*float) seq) = 
+            let data : Series seq = this.["data"] |> unbox
+            this.["data"] <- Seq.append data (seq [values |> Seq.map (fun p -> {x = fst p; y = snd p})])
 
     type HistogramChart() =
         inherit ChartBase()
@@ -72,14 +72,10 @@ module ChartTypes =
 
 type MGChart =
 
-    static member Line (values:seq<seq<float*float>>) =
+    static member Line (values:seq<float*float>) =
         let chart = new ChartTypes.LineChart()
-        values |> Seq.iter (fun vs -> chart.addSeries(vs))
+        chart.addSeries(values)
         chart
-
-    static member Line (values: seq<seq<float>>) =
-        let chart = new ChartTypes.LineChart()
-        values |> Seq.iter (Seq.mapi (fun i v -> (float i, v)) >> chart.addSeries)
 
     static member Histogram (values: seq<float>) =
         let chart = new ChartTypes.HistogramChart()
