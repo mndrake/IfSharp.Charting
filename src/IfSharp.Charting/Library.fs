@@ -35,7 +35,19 @@ module ChartTypes =
             options.["y_extended_ticks"] <- true
             options.["target"] <- String.Format("#{0}", guid)
 
-        member internal this.Template with get() = template and set value = template <- value
+        member this.HasOption key = options.ContainsKey(key)
+
+        member this.xLabel 
+            with get() : string = this.["x_label"] |> unbox 
+             and set (value:string) = 
+                if not <| this.HasOption("x_label") then this.["left"] <- 60                 
+                this.["x_label"] <- value
+
+        member this.yLabel 
+            with get() : string = this.["y_label"] |> unbox 
+             and set (value:string) = 
+                 if not <| this.HasOption("x_label") then this.["bottom"] <- 60
+                 this.["y_label"] <- value
 
         member this.ToHtml() =
             // FUNC can be used to wrap a javascript function passed to the data_graphic method
@@ -43,8 +55,8 @@ module ChartTypes =
                     .Replace("{GUID}", guid)
                     .Replace("\"FUNC", "").Replace("FUNC\"", "")
 
-
         member this.Item with get(key) = options.[key] and set key (value: obj) = options.[key] <- value
+
 
     type LineChart() =
         inherit ChartBase()
@@ -52,11 +64,12 @@ module ChartTypes =
             base.["area"] <- false
             base.["x_accessor"] <- "x"
             base.["y_accessor"] <- "y"
-            base.["data"] <- Seq.empty
+            base.["data"] <- Seq.empty<Series>
 
         member this.addSeries (values: (float*float) seq) = 
             let data : Series seq = this.["data"] |> unbox
             this.["data"] <- Seq.append data (seq [values |> Seq.map (fun p -> {x = fst p; y = snd p})])
+
 
     type HistogramChart() =
         inherit ChartBase()
@@ -70,14 +83,30 @@ module ChartTypes =
         member this.Data with get() : seq<float> = this.["data"] |> unbox and set (value:seq<float>) = this.["data"] <- value
 
 
-type MGChart =
-
-    static member Line (values:seq<float*float>) =
+type Line =
+    static member create values =
         let chart = new ChartTypes.LineChart()
         chart.addSeries(values)
         chart
 
-    static member Histogram (values: seq<float>) =
+    static member addSeries values (chart: ChartTypes.LineChart) =
+        chart.addSeries(values)
+        chart
+
+    static member xLabel value (chart: ChartTypes.LineChart) =
+        chart.xLabel <- value
+        chart
+
+    static member yLabel value (chart: ChartTypes.LineChart) =
+        chart.yLabel <- value
+        chart
+
+type Histogram =
+    static member create values =
         let chart = new ChartTypes.HistogramChart()
         chart.Data <- values
+        chart
+
+    static member bins value (chart: ChartTypes.HistogramChart) =
+        chart.Bins <- value
         chart
