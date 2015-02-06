@@ -1,3 +1,6 @@
+#### 0.0.7-alpha - 2/6/2015
+* fixed Histogram mouseover comment
+
 #### 0.0.6-alpha - 2/6/2015
 * added Line and Histogram methods
 
