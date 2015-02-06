@@ -1,3 +1,6 @@
+#### 0.0.6-alpha - 2/6/2015
+* added Line and Histogram methods
+
 #### 0.0.5-alpha - 2/5/2015
 * bug fix
 
