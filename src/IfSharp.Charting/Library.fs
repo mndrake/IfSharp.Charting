@@ -52,7 +52,7 @@ module ChartTypes =
             base.["area"] <- false
             base.["x_accessor"] <- "x"
             base.["y_accessor"] <- "y"
-            base.["data"] <- []
+            base.["data"] <- seq []
 
         member this.addSeries (values: seq<float*float>) = 
             let data = this.["data"] |> unbox
