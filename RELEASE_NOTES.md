@@ -1,3 +1,6 @@
+#### 0.1.0-alpha - 2/6/2015
+* Line and Histogram charts
+
 #### 0.0.8-alpha - 2/6/2015
 * fixed Histogram mouseover comment
 
